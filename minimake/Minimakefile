@@ -1,0 +1,20 @@
+CC = cc
+CPPFLAGS = -D_POSIX_C_SOURCE=200809L -Isrc
+CFLAGS = -std=c99 -pedantic -Werror -Wall -Wextra -Wvla
+OBJECTS = src/main.o src/build.o src/execute.o src/expand.o src/load.o src/memory.o src/model.o src/options.o src/parser.o src/pattern.o src/pretty.o src/remake.o src/strings.o src/text.o src/variables.o
+HEADERS = src/build.h src/execute.h src/expand.h src/load.h src/memory.h src/model.h src/options.h src/parser.h src/pattern.h src/text.h
+
+minimake: $(OBJECTS)
+	$(CC) -o $@ $^
+
+src/%.o: src/%.c $(HEADERS)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+
+check: minimake
+	make check
+
+clean:
+	rm -f $(OBJECTS) src/*.d minimake
+	rm -rf build
+
+.PHONY: check clean

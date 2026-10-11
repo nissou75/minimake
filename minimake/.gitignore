@@ -1,0 +1,8 @@
+/minimake
+/build/
+*.o
+*.d
+*.gcda
+*.gcno
+*.gcov
+*.core
